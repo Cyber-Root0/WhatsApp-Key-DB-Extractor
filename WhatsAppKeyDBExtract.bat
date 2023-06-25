@@ -28,6 +28,7 @@ echo Please connect your Android device with USB Debugging enabled:
 echo.
 bin\adb.exe kill-server
 bin\adb.exe start-server
+bin\adb.exe connect 127.0.0.1:7555
 bin\adb.exe wait-for-device
 bin\adb.exe shell getprop ro.build.version.sdk > tmp\sdkver.txt
 set /p sdkver=<tmp\sdkver.txt
@@ -111,8 +112,10 @@ echo Install complete
 echo.
 if %sdkver% geq 23 (
 bin\adb.exe backup -f tmp\whatsapp.ab com.whatsapp
+copy tmp\whatsapp.ab extracted\whatsapp.ab
 ) else (
 bin\adb.exe backup -f tmp\whatsapp.ab -noapk com.whatsapp
+copy tmp\whatsapp.ab extracted\whatsapp.ab
 )
 if exist tmp\whatsapp.ab (
 echo.
